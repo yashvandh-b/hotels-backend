@@ -1,0 +1,9 @@
+<div class="card">
+  <div class="card-header">
+    <h1>Add New Hotel</h1>
+  </div>
+  <div class="card-body">
+    <%= render 'form', hotel: @hotel %>
+  </div>
+</div>
+<%= link_to 'Back', hotels_path, class: "btn btn-dark" %>
