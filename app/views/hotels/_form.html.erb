@@ -27,14 +27,19 @@
   </div>
 
   <div class="field form-group">
-    <%= form.label :website %>
-    <%= form.text_field :website, class: "form-control" %><br/>
+    <%= form.label :email %>
+    <%= form.text_field :email, class: "form-control" %><br/>
   </div>
-
-  <div class="field form-group">
-    <%= form.number_field :user_id, id: :friend_user_id, value: current_user.id, class: "form-control", type: :hidden %><br/>
-  </div>
-
+  <% if current_user.superadmin %>
+    <div class="field form-group">
+      <%= form.label :User_Id %>
+      <%= form.number_field :user_id, id: :hotel_user_id, value: current_user.id, class: "form-control" %><br/>
+    </div>
+  <%else%>
+    <div class="field form-group">
+      <%= form.number_field :user_id, id: :hotel_user_id, value: current_user.id, class: "form-control", type: :hidden %><br/>
+    </div>
+  <%end%>
   <div class="actions">
     <%= form.submit class: "btn btn-primary" %><br/>
   </div>

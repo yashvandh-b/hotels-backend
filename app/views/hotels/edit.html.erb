@@ -1,7 +1,6 @@
 <h1>Update Hotel Details</h1>
 
 <%= render 'form', hotel: @hotel %>
-<%= link_to 'Show', @hotel, class: "btn btn-info" %>
 <%= link_to 'Delete', @hotel, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
 <%= link_to 'Back', hotels_path, class: "btn btn-dark" %>
 

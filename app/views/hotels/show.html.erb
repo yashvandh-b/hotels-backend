@@ -8,19 +8,20 @@
     }
 </style>
 
-
-<div class="jumbotron jumbotron-fluid">
-  <div class = "container">
-  <h1 class="display-4"><%= @hotel.name %></h1>
-  <p class="lead">
-    <%= @hotel.location %> |
-    <%= @hotel.phone %> |
-    <%= @hotel.website %>
-  </p>
-  <p class="lead">
-    <%= link_to 'Edit', edit_hotel_path(@hotel), class: "btn btn-primary" %>
-    <%= link_to 'Delete', @hotel, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
-    <%= link_to 'Back', hotels_path, class: "btn btn-dark" %>
-  </p>
+  <div class="jumbotron jumbotron-fluid">
+    <div class = "container">
+    <h1 class="display-4"><%= @hotel.name %></h1>
+    <p class="lead">
+      <%= @hotel.location %> |
+      <%= @hotel.phone %> |
+      <%= @hotel.email %>
+    </p>
+    <p class="lead">
+      <% if current_user && current_user.superadmin %>
+        <%= link_to 'Edit', edit_hotel_path(@hotel), class: "btn btn-primary" %>
+        <%= link_to 'Delete', @hotel, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+      <%end%>
+      <%= link_to 'Back', hotels_path, class: "btn btn-dark" %>
+    </p>
+    </div>
   </div>
-</div>

@@ -1,7 +1,6 @@
 class HotelsController < ApplicationController
-  before_action :set_hotel, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :correct_user, only: [:edit, :update, :destroy]
+  before_action :set_hotel, only: %i[ show edit update destroy adminindex ]
+  before_action :authenticate_user!, except: [:index, :show, :adminindex]
 
   # GET /hotels or /hotels.json
   def index
@@ -12,14 +11,14 @@ class HotelsController < ApplicationController
   def show
   end
 
-  # GET /hotels/new
-  def new
-    @hotel = Hotel.new
-    @hotel = current_user.hotels.build
+  def adminindex
+    @adminhotel = Hotel.where(user_id: current_user.id)
   end
 
-  # GET /hotels/1/edit
-  def edit
+  # GET /hotels/new
+  def new
+    #@hotel = Hotel.new
+    @hotel = current_user.hotels.build
   end
 
   # POST /hotels or /hotels.json
@@ -29,17 +28,12 @@ class HotelsController < ApplicationController
     respond_to do |format|
       if @hotel.save
         format.html { redirect_to @hotel, notice: "Hotel was successfully created." }
-        format.json { render :show, status: :created, location: @hotel }
+        #format.json { render :show, status: :created, location: @hotel }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @hotel.errors, status: :unprocessable_entity }
+        #format.json { render json: @hotel.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  def correct_user
-    @hotel = current_user.hotels.find_by(id: params[:id])
-    redirect_to hotels_path, notice: "Not Authorized" if @hotel.nil?
   end
 
   # PATCH/PUT /hotels/1 or /hotels/1.json
@@ -47,10 +41,10 @@ class HotelsController < ApplicationController
     respond_to do |format|
       if @hotel.update(hotel_params)
         format.html { redirect_to @hotel, notice: "Hotel was successfully updated." }
-        format.json { render :show, status: :ok, location: @hotel }
+        #format.json { render :show, status: :ok, location: @hotel }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @hotel.errors, status: :unprocessable_entity }
+        #format.json { render json: @hotel.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -60,7 +54,7 @@ class HotelsController < ApplicationController
     @hotel.destroy
     respond_to do |format|
       format.html { redirect_to hotels_url, notice: "Hotel was successfully destroyed." }
-      format.json { head :no_content }
+      #format.json { head :no_content }
     end
   end
 
@@ -68,10 +62,13 @@ class HotelsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_hotel
       @hotel = Hotel.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => e
+      #raise MyCustomError, "Hotel Not Found"
     end
 
     # Only allow a list of trusted parameters through.
     def hotel_params
-      params.require(:hotel).permit(:name, :location, :phone, :website, :user_id)
+      params.require(:hotel).permit(:name, :location, :phone, :email, :user_id)
     end
+
 end

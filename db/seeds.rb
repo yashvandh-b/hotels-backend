@@ -5,3 +5,10 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+require 'time'
+
+
+500.times do
+    Hotel.create(:name => "abc", :location => "chennai", :phone => "1234567890", :website => "abc@abc.com", :created_at => Time.now, :updated_at => Time.now, :user_id => 3)
+end
