@@ -1,0 +1,40 @@
+
+<% if logged_in? %>
+    <%if @branches %>
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Manager Name</th>
+                <th>Manager Phone</th>
+                <%if is_superadmin? %>
+                    <th>Branch Id</th>
+                    <th>Hotel Id</th>
+                    <th></th>
+                <%end%>
+            </tr>
+            </thead>
+
+            <tbody>
+            <% @branches.each do |branch| %>
+                <tr>
+                <td><%= branch.name %></td>
+                <td><%= branch.location %></td>
+                <td><%= branch.manager_name %></td>
+                <td><%= branch.manager_phone %></td>
+                <%if is_superadmin? %>
+                    <td><%= branch.id %></td>
+                    <td><%= branch.hotel_id %></td>
+                    <td><%= link_to 'Delete', branch, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger btn-sm" %></td>
+                <%end%>
+                </tr> 
+            <%end%>
+            </tbody>
+        </table>
+    <%else%>
+        <h1> No branches found.</h1>
+    <%end%>
+<%else%>
+    <% controller.redirect_to root_path %>
+<%end%>

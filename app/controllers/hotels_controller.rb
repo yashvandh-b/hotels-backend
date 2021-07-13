@@ -1,10 +1,9 @@
 class HotelsController < ApplicationController
-  before_action :set_hotel, only: %i[ show edit update destroy adminindex ]
-  before_action :authenticate_user!, except: [:index, :show, :adminindex]
+  before_action :set_hotel, only: %i[ show edit update destroy]
 
   # GET /hotels or /hotels.json
   def index
-    @hotels = Hotel.all
+    @hotels = Hotel.page params[:page]
   end
 
   # GET /hotels/1 or /hotels/1.json
@@ -12,41 +11,38 @@ class HotelsController < ApplicationController
   end
 
   def adminindex
-    @adminhotel = Hotel.where(user_id: current_user.id)
+    #@adminhotel = Hotel.where(user_id: current_user.id)
+    @adminhotel = Hotel.where(user_id: current_user.id).page params[:page]
   end
 
   # GET /hotels/new
   def new
-    #@hotel = Hotel.new
-    @hotel = current_user.hotels.build
+    @hotel = Hotel.new
+    #@hotel = current_user.hotels.build
   end
 
   # POST /hotels or /hotels.json
   def create
-    #@hotel = Hotel.new(hotel_params)
-    @hotel = current_user.hotels.build(hotel_params)
+    @hotel = Hotel.new(hotel_params)
+    #@hotel = current_user.hotels.build(hotel_params)
     respond_to do |format|
       if @hotel.save
         format.html { redirect_to @hotel, notice: "Hotel was successfully created." }
-        #format.json { render :show, status: :created, location: @hotel }
       else
         format.html { render :new, status: :unprocessable_entity }
-        #format.json { render json: @hotel.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # PATCH/PUT /hotels/1 or /hotels/1.json
   def update
-    respond_to do |format|
-      if @hotel.update(hotel_params)
-        format.html { redirect_to @hotel, notice: "Hotel was successfully updated." }
-        #format.json { render :show, status: :ok, location: @hotel }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        #format.json { render json: @hotel.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @hotel.update(hotel_params)
+          format.html { redirect_to @hotel, notice: "Hotel was successfully updated." }
+        else
+          format.html { render :edit, status: :unprocessable_entity }
+        end
       end
-    end
   end
 
   # DELETE /hotels/1 or /hotels/1.json
@@ -63,12 +59,11 @@ class HotelsController < ApplicationController
     def set_hotel
       @hotel = Hotel.find(params[:id])
     rescue ActiveRecord::RecordNotFound => e
-      #raise MyCustomError, "Hotel Not Found"
     end
 
     # Only allow a list of trusted parameters through.
     def hotel_params
-      params.require(:hotel).permit(:name, :location, :phone, :email, :user_id)
+      params.require(:hotel).permit(:name, :phone, :email, :user_id)
     end
 
 end

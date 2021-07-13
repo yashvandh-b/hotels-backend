@@ -2,5 +2,6 @@
 
 one:
   name: "Hotel2"
-  phone: 1234567890
-  email: hotel@gmail.com
+  location: "Chennai"
+  manager_name: "Me"
+  manager_phone: 1234567890

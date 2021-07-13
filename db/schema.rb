@@ -10,11 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_09_110759) do
+ActiveRecord::Schema.define(version: 2021_07_12_191046) do
+
+  create_table "branches", force: :cascade do |t|
+    t.string "name"
+    t.string "location"
+    t.string "manager_name"
+    t.integer "manager_phone"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "hotel_id"
+    t.index ["hotel_id"], name: "index_branches_on_hotel_id"
+  end
 
   create_table "hotels", force: :cascade do |t|
     t.string "name"
-    t.string "location"
     t.string "phone"
     t.string "email"
     t.datetime "created_at", precision: 6, null: false
@@ -24,17 +34,11 @@ ActiveRecord::Schema.define(version: 2021_07_09_110759) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.string "email"
+    t.string "password_digest"
+    t.integer "role", default: 2
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "admin", default: false
-    t.boolean "superadmin", default: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
 end

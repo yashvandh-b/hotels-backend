@@ -1,0 +1,52 @@
+
+<%if logged_in?%>
+  <h1> Add Branch </h1>
+
+  <%= form_with(model: @branch) do |f| %>
+      <% if @branch.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@branch.errors.count, "error") %> prohibited this branch from being saved:</h2>
+          <ul>
+            <% @branch.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      
+      <div class="form-group">
+      <%= f.label :name %>
+      <%= f.text_field :name, class: "form-control" %>
+      </div><br />
+      
+      <div class="form-group">
+      <%= f.label :location %>
+      <%= f.text_field :location, class: "form-control" %>
+      </div><br />
+
+      <div class="form-group">
+      <%= f.label :manager_name %>
+      <%= f.text_field :manager_name, class: "form-control" %>
+      </div><br />
+
+      <div class="form-group">
+      <%= f.label :manager_phone %>
+      <%= f.text_field :manager_phone, class: "form-control" %>
+      </div>
+
+      <div class="field form-group">
+          <%= f.number_field :hotel_id, id: :branch_hotel_id, value: :hotel_id, class: "form-control", type: :hidden %><br/>
+      </div>
+
+      <div class="form-group">
+      <%= f.submit class: "btn btn-primary"%>
+      </div>
+  
+  <% end %>
+  <br />
+
+  <%= link_to 'Back', root_path, class: "btn btn-dark" %>
+
+<%else%>
+  <%controller.redirect_to root_path%>
+<%end%>

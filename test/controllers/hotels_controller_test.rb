@@ -7,35 +7,34 @@ class HotelsControllerTest < ActionDispatch::IntegrationTest
 
   test "should get index" do
     get hotels_url
-    assert_response :success
+    assert_redirected_to home_index_url
   end
 
   test "should get new" do
     get new_hotel_url
-    assert_response :success
+    assert_redirected_to root_url
   end
 
   test "should create hotel" do
     assert_difference('Hotel.count') do
-      post hotels_url, params: { hotel: { location: @hotel.location, name: @hotel.name, phone: @hotel.phone, website: @hotel.website } }
+      post hotels_url, params: { hotel: { name: @hotel.name, phone: @hotel.phone, email: @hotel.email } }
     end
-
-    assert_redirected_to hotel_url(Hotel.last)
+    assert_redirected_to root_url
   end
 
   test "should show hotel" do
     get hotel_url(@hotel)
-    assert_response :success
+    assert_redirected_to home_index_url
   end
 
   test "should get edit" do
     get edit_hotel_url(@hotel)
-    assert_response :success
+    assert_redirected_to root_url
   end
 
   test "should update hotel" do
-    patch hotel_url(@hotel), params: { hotel: { location: @hotel.location, name: @hotel.name, phone: @hotel.phone, website: @hotel.website } }
-    assert_redirected_to hotel_url(@hotel)
+    patch hotel_url(@hotel), params: { hotel: { name: @hotel.name, phone: @hotel.phone, email: @hotel.email } }
+    assert_redirected_to root_url
   end
 
   test "should destroy hotel" do

@@ -1,13 +1,20 @@
 Rails.application.routes.draw do
+  root 'hotels#index'
+  resources :hotels do
+    resources :branches, except: [:update, :destroy]
+  end
+
+  resources :branches, only: [:update, :destroy]
+
+  get "signup", to: "users#new"
+  get "login", to: "sessions#new"
+  post "login", to: "sessions#create"
+  delete "logout", to: "sessions#destroy"
+  get "manage", to: "users#manageusers"
+
+  resources :users, only: [:index, :show, :edit, :update, :destroy]
   
-  root to: 'hotels#index'
-  devise_for :users
-  resources :hotels
-
   get 'adminindex', to: 'hotels#adminindex'
-  #root 'home#index'
-
-  #get 'home/index'
   get 'home/about'
   get 'home/index'
 

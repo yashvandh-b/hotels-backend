@@ -1,47 +1,46 @@
-<%= form_with(model: hotel) do |form| %>
-  <% if hotel.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(hotel.errors.count, "error") %> prohibited this hotel from being saved:</h2>
+<% if logged_in? %>
+  <%= form_with(model: hotel) do |form| %>
+    <% if hotel.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(hotel.errors.count, "error") %> prohibited this hotel from being saved:</h2>
 
-      <ul>
-        <% hotel.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+        <ul>
+          <% hotel.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field form-group">
+      <%= form.label :name %>
+      <%= form.text_field :name, class: "form-control" %><br/>
     </div>
+
+    <div class="field form-group">
+      <%= form.label :phone %>
+      <%= form.text_field :phone, class: "form-control" %><br/>
+    </div>
+
+    <div class="field form-group">
+      <%= form.label :email %>
+      <%= form.text_field :email, class: "form-control" %><br/>
+    </div>
+    <%if is_superadmin? %>
+      <div class="field form-group">
+        <%= form.label :User_Id %>
+        <%= form.number_field :user_id, id: :hotel_user_id, class: "form-control" %><br/>
+      </div>
+    <%else%>
+      <div class="field form-group">
+        <%= form.number_field :user_id, id: :hotel_user_id, value: current_user.id, class: "form-control", type: :hidden %><br/>
+      </div>
+    <%end%>
+    <div class="actions">
+      <%= form.submit class: "btn btn-primary" %><br/>
+    </div>
+    <br/>
   <% end %>
-
-  <div class="field form-group">
-    <%= form.label :name %>
-    <%= form.text_field :name, class: "form-control" %><br/>
-  </div>
-
-  <div class="field form-group">
-    <%= form.label :location %>
-    <%= form.text_field :location, class: "form-control" %><br/>
-  </div>
-
-  <div class="field form-group">
-    <%= form.label :phone %>
-    <%= form.text_field :phone, class: "form-control" %><br/>
-  </div>
-
-  <div class="field form-group">
-    <%= form.label :email %>
-    <%= form.text_field :email, class: "form-control" %><br/>
-  </div>
-  <% if current_user.superadmin %>
-    <div class="field form-group">
-      <%= form.label :User_Id %>
-      <%= form.number_field :user_id, id: :hotel_user_id, value: current_user.id, class: "form-control" %><br/>
-    </div>
-  <%else%>
-    <div class="field form-group">
-      <%= form.number_field :user_id, id: :hotel_user_id, value: current_user.id, class: "form-control", type: :hidden %><br/>
-    </div>
-  <%end%>
-  <div class="actions">
-    <%= form.submit class: "btn btn-primary" %><br/>
-  </div>
-  <br/>
-<% end %>
+<%else%>
+  <% controller.redirect_to root_path %>
+<%end%>

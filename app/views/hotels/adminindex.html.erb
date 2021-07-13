@@ -4,20 +4,19 @@
   <thead class="table-dark">
     <tr>
       <th>Name</th>
-      <th>Location</th>
       <th>Phone</th>
       <th>Email</th>
     </tr>
   </thead>
 
   <tbody>
-        <% @adminhotel.each do |hotel| %>
-            <tr>
-              <td><%= link_to hotel.name, hotel %></td>
-              <td><%= hotel.location %></td>
-              <td><%= hotel.phone %></td>
-              <td><%= hotel.email %></td>
-            </tr> 
-        <%end%>
-    </tbody>
+    <%= paginate @adminhotel%>
+    <% @adminhotel.each do |hotel| %>
+        <tr>
+          <td><%= link_to hotel.name, hotel %></td>
+          <td><%= hotel.phone %></td>
+          <td><%= hotel.email %></td>
+        </tr> 
+    <%end%>
+  </tbody>
 </table>

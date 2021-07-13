@@ -1,4 +1,3 @@
-
 <style type="text/css">
     .jumbotron {
       padding: 4rem 2rem;
@@ -7,17 +6,16 @@
       border-radius: .3rem;  
     }
 </style>
-
+<%if logged_in? %>
   <div class="jumbotron jumbotron-fluid">
     <div class = "container">
     <h1 class="display-4"><%= @hotel.name %></h1>
     <p class="lead">
-      <%= @hotel.location %> |
       <%= @hotel.phone %> |
       <%= @hotel.email %>
     </p>
     <p class="lead">
-      <% if current_user && current_user.superadmin %>
+      <% if is_superadmin? %>
         <%= link_to 'Edit', edit_hotel_path(@hotel), class: "btn btn-primary" %>
         <%= link_to 'Delete', @hotel, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
       <%end%>
@@ -25,3 +23,10 @@
     </p>
     </div>
   </div>
+  
+  <%= link_to 'New Branch', new_hotel_branch_path(hotel_id: @hotel.id), class: "btn btn-primary" %><br /><br />
+  <%= link_to 'All Branch', hotel_branches_path(hotel_id: @hotel.id), class: "btn btn-dark" %><br />
+
+<%else%>
+   <% controller.redirect_to(home_index_path) %>
+<%end%>
