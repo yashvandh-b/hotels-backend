@@ -6,13 +6,12 @@ Rails.application.routes.draw do
 
   resources :branches, only: [:update, :destroy]
 
-  get "signup", to: "users#new"
   get "login", to: "sessions#new"
   post "login", to: "sessions#create"
   delete "logout", to: "sessions#destroy"
   get "manage", to: "users#manageusers"
 
-  resources :users, only: [:index, :show, :edit, :update, :destroy]
+  resources :users
   
   get 'adminindex', to: 'hotels#adminindex'
   get 'home/about'

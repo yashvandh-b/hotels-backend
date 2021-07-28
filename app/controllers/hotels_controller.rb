@@ -1,9 +1,11 @@
 class HotelsController < ApplicationController
   before_action :set_hotel, only: %i[ show edit update destroy]
+  skip_before_action :verify_authenticity_token
 
   # GET /hotels or /hotels.json
   def index
     @hotels = Hotel.page params[:page]
+    render json: @hotels, only: [:id, :name, :phone, :email, :user_id]
   end
 
   # GET /hotels/1 or /hotels/1.json
@@ -27,9 +29,10 @@ class HotelsController < ApplicationController
     #@hotel = current_user.hotels.build(hotel_params)
     respond_to do |format|
       if @hotel.save
-        format.html { redirect_to @hotel, notice: "Hotel was successfully created." }
+        #format.html { redirect_to @hotel, notice: "Hotel was successfully created." }
+        format.json {render :show, status: :ok}
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.json { render :new, status: :unprocessable_entity }
       end
     end
   end

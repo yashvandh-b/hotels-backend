@@ -23,6 +23,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'kaminari', '~> 1.2', '>= 1.2.1'
 
+gem 'rack-cors', :require => 'rack/cors'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
