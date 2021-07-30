@@ -1,6 +1,7 @@
 class BranchesController < ApplicationController
 
-    before_action :set_branch, only: [ :edit, :update, :destroy]
+    before_action :set_branch, only: [ :edit, :update, :destroy, :show]
+    skip_before_action :verify_authenticity_token
     
     def new
         @branch = Branch.new
@@ -8,9 +9,14 @@ class BranchesController < ApplicationController
 
     def index
         @branches = Branch.where(hotel_id: params[:hotel_id])
+        render json: @branches
     end
     
     def edit
+    end
+
+    def show
+        render json: @branch, only: [:id, :name, :location, :manager_name, :manager_phone, :hotel_id]
     end
 
     def create
@@ -18,17 +24,15 @@ class BranchesController < ApplicationController
         respond_to do |format|
             if @branch.save
                 format.html { redirect_to @branch, notice: "Branch was successfully created." }
+                format.json { render json: @branch, status: :ok}
             else
-                format.html { render :new, status: :unprocessable_entity }
+                format.json { render :new, status: :unprocessable_entity }
             end
         end
     end
 
     def destroy
         @branch.destroy
-        respond_to do |format|
-            format.html { redirect_to root_path, notice: "Branch was successfully destroyed." }
-        end
     end
 
     private

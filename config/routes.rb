@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   root 'hotels#index'
   resources :hotels do
-    resources :branches, except: [:update, :destroy]
+    resources :branches, except: [:update, :destroy, :show]
   end
 
-  resources :branches, only: [:update, :destroy]
+  resources :branches, only: [:update, :destroy, :show]
 
   get "login", to: "sessions#new"
   post "login", to: "sessions#create"

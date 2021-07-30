@@ -10,6 +10,7 @@ class HotelsController < ApplicationController
 
   # GET /hotels/1 or /hotels/1.json
   def show
+    render json: @hotel, only: [:id, :name, :phone, :email, :user_id]
   end
 
   def adminindex
@@ -29,8 +30,8 @@ class HotelsController < ApplicationController
     #@hotel = current_user.hotels.build(hotel_params)
     respond_to do |format|
       if @hotel.save
-        #format.html { redirect_to @hotel, notice: "Hotel was successfully created." }
-        format.json {render :show, status: :ok}
+        format.html { redirect_to @hotel, notice: "Hotel was successfully created." }
+        format.json { render json: @hotel, status: :ok }
       else
         format.json { render :new, status: :unprocessable_entity }
       end
@@ -42,8 +43,9 @@ class HotelsController < ApplicationController
       respond_to do |format|
         if @hotel.update(hotel_params)
           format.html { redirect_to @hotel, notice: "Hotel was successfully updated." }
+          format.json {render json: @hotel, status: :ok}
         else
-          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render :edit, status: :unprocessable_entity }
         end
       end
   end
@@ -51,10 +53,6 @@ class HotelsController < ApplicationController
   # DELETE /hotels/1 or /hotels/1.json
   def destroy
     @hotel.destroy
-    respond_to do |format|
-      format.html { redirect_to hotels_url, notice: "Hotel was successfully destroyed." }
-      #format.json { head :no_content }
-    end
   end
 
   private
@@ -66,7 +64,7 @@ class HotelsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def hotel_params
-      params.require(:hotel).permit(:name, :phone, :email, :user_id)
+      params.require(:hotel).permit(:id, :name, :phone, :email, :user_id)
     end
 
 end

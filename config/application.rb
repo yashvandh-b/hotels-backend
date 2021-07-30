@@ -17,7 +17,7 @@ module Demo
       resource(
       '*',
       headers: :any,
-      methods: [:get,:post, :patch, :put, :options]
+      methods: [:get,:post, :patch, :put, :options, :delete]
       )
       end
       end
