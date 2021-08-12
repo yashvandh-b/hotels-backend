@@ -23,6 +23,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'kaminari', '~> 1.2', '>= 1.2.1'
 
+gem 'pagy', '~> 0.6.0'
+
 gem 'rack-cors', :require => 'rack/cors'
 
 group :development, :test do

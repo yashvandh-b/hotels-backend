@@ -9,4 +9,6 @@
 require 'time'
 
 
-Hotel.create(:name => "abc", :location => "chennai", :phone => "1234567890", :website => "abc@abc.com", :created_at => Time.now, :updated_at => Time.now, :user_id => 3)
+50.times do
+    Hotel.create(:name => "Sample Hotel", :phone => "1234567890", :email => "sample@hotel.com", :created_at => Time.now, :updated_at => Time.now, :user_id => 1)
+end

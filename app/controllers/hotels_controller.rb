@@ -4,7 +4,9 @@ class HotelsController < ApplicationController
 
   # GET /hotels or /hotels.json
   def index
-    @hotels = Hotel.page params[:page]
+    #@queried_hotels = Hotel.page params[:page]
+    @hotels = Hotel.all.order(created_at: :desc)
+    @hotels = pagy_custom(@hotels)
     render json: @hotels, only: [:id, :name, :phone, :email, :user_id]
   end
 
